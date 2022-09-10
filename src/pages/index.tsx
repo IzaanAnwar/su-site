@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
+import Landing from '../components/Landing';
 import { trpc } from '../utils/trpc';
 
 const Home: NextPage = () => {
@@ -13,6 +14,7 @@ const Home: NextPage = () => {
     ]);
 
     async function handleLogin() {
+<<<<<<< HEAD
         const data = await fetch('http://localhost:3000/api/register/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -38,6 +40,29 @@ const Home: NextPage = () => {
             .catch((error) => {
                 console.log(error);
             });
+=======
+
+        const data = await fetch(
+            'http://localhost:3000/api/register/',
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: 'Izaan', phone: '123456789', password: '123456789', email: 'bhoolachodi@gmail.com'
+                }),
+            }
+        ).then(async () => {
+            signIn('credentials', {
+                name: 'Izaan', phone: '123456789', password: '123456789', email: 'bhoolachodi@gmail.com', redirect: false, callbackUrl: 'http://localhost:3000/'
+            })
+        })
+            .catch(error => {
+                console.log(error)
+
+            })
+
+
+>>>>>>> 115e0f137e333fab3a4e0253a8f3dd05c7bec9cc
     }
 
     return (
@@ -48,6 +73,7 @@ const Home: NextPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
+<<<<<<< HEAD
             <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
                 <h1 className="text-5xl md:text-[5rem] leading-normal font-extrabold text-gray-700">
                     Create <span className="text-purple-300">T3</span> App
@@ -107,6 +133,10 @@ const Home: NextPage = () => {
                         </div>
                     )}
                 </div>
+=======
+            <main>
+                <Landing />
+>>>>>>> 115e0f137e333fab3a4e0253a8f3dd05c7bec9cc
             </main>
         </>
     );
