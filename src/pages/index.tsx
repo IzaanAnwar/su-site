@@ -14,7 +14,6 @@ const Home: NextPage = () => {
     ]);
 
     async function handleLogin() {
-<<<<<<< HEAD
         const data = await fetch('http://localhost:3000/api/register/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -23,7 +22,6 @@ const Home: NextPage = () => {
                 phone: '123456789',
                 password: '123456789',
                 email: 'bhoolachodi@gmail.com',
-                address: 'someaddress',
             }),
         })
             .then(async () => {
@@ -32,7 +30,6 @@ const Home: NextPage = () => {
                     phone: '123456789',
                     password: '123456789',
                     email: 'bhoolachodi@gmail.com',
-                    address: 'someaddress',
                     redirect: false,
                     callbackUrl: 'http://localhost:3000/',
                 });
@@ -40,29 +37,6 @@ const Home: NextPage = () => {
             .catch((error) => {
                 console.log(error);
             });
-=======
-
-        const data = await fetch(
-            'http://localhost:3000/api/register/',
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: 'Izaan', phone: '123456789', password: '123456789', email: 'bhoolachodi@gmail.com'
-                }),
-            }
-        ).then(async () => {
-            signIn('credentials', {
-                name: 'Izaan', phone: '123456789', password: '123456789', email: 'bhoolachodi@gmail.com', redirect: false, callbackUrl: 'http://localhost:3000/'
-            })
-        })
-            .catch(error => {
-                console.log(error)
-
-            })
-
-
->>>>>>> 115e0f137e333fab3a4e0253a8f3dd05c7bec9cc
     }
 
     return (
@@ -73,70 +47,8 @@ const Home: NextPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-<<<<<<< HEAD
-            <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
-                <h1 className="text-5xl md:text-[5rem] leading-normal font-extrabold text-gray-700">
-                    Create <span className="text-purple-300">T3</span> App
-                </h1>
-                <p className="text-2xl text-gray-700">This stack uses:</p>
-                <div className="grid gap-3 pt-3 mt-3 text-center md:grid-cols-2 lg:w-2/3">
-                    {session ? (
-                        <div className="pt-6 text-2xl text-blue-500 flex justify-center items-center w-full">
-                            {hello.data ? (
-                                <div>
-                                    <h5 className="block">
-                                        {user.data?.email
-                                            ? user.data?.email
-                                            : session.user?.email}
-                                    </h5>
-
-                                    <h5 className="block">
-                                        {hello.data.greeting}
-                                    </h5>
-                                    <div className="pt-6 text-2xl text-blue-500 flex justify-center items-center w-full">
-                                        <button
-                                            className="px-12 py-2 text-gray-200 bg-blue-500 hover:text-blue-500 hover:bg-gray-200 hover:border-2 hover:border-blue-500 rounded-3xl duration-200"
-                                            onClick={() => {
-                                                signOut();
-                                            }}
-                                        >
-                                            Logout
-                                        </button>
-                                    </div>
-                                </div>
-                            ) : (
-                                <>
-                                    <p>Loading...</p>
-                                </>
-                            )}
-                        </div>
-                    ) : (
-                        <div className="pt-6 text-2xl text-blue-500 flex justify-center items-center w-full">
-                            <button
-                                className="px-12 py-2 text-gray-200 bg-blue-500 hover:text-blue-500 hover:bg-gray-200 hover:border-2 hover:border-blue-500 rounded-3xl duration-200"
-                                onClick={() => {
-                                    signIn('google', {
-                                        callbackUrl: 'http://localhost:3000/',
-                                    });
-                                }}
-                            >
-                                Login
-                            </button>
-                            <button
-                                className="px-12 py-2 text-gray-200 bg-blue-500 hover:text-blue-500 hover:bg-gray-200 hover:border-2 hover:border-blue-500 rounded-3xl duration-200"
-                                onClick={async () => {
-                                    await handleLogin();
-                                }}
-                            >
-                                Register
-                            </button>
-                        </div>
-                    )}
-                </div>
-=======
             <main>
                 <Landing />
->>>>>>> 115e0f137e333fab3a4e0253a8f3dd05c7bec9cc
             </main>
         </>
     );
