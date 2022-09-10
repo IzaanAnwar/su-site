@@ -11,15 +11,19 @@ import { compare } from 'bcrypt';
 export const authOptions: NextAuthOptions = {
     // Include user.id on session
     callbacks: {
-        async jwt({ token, user }) {
+        async jwt({ token, user, account }) {
             if (user?.token) {
-                token.token = user.token;
+                token.accessToken = user.token;
+            }
+            if (account?.access_token) {
+                token.accessToken = account.access_token;
             }
             return token;
         },
         async session({ session, token }) {
             if (session.user) {
                 session.user.id = token.id as string;
+                session.accessToken = token.accessToken;
             }
             return session;
         },
@@ -34,15 +38,8 @@ export const authOptions: NextAuthOptions = {
         // ...add more providers here
         CredentialsProvider({
             credentials: {
-                name: {
-                    label: 'name',
-                    type: 'text',
-                },
-
                 email: { label: 'email', type: 'text' },
-                phone: { label: 'phone', type: 'text' },
                 password: { label: 'password', type: 'text' },
-                address: { label: 'address', type: 'text' },
             },
             async authorize(credentials) {
                 if (!credentials) {
@@ -67,7 +64,7 @@ export const authOptions: NextAuthOptions = {
         maxAge: 3600,
     },
     jwt: {
-        secret: 'IamGod',
+        secret: env.JWT_SECRET,
         maxAge: 3600,
     },
 };

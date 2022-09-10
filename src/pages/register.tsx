@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { signIn } from 'next-auth/react';
+import { router } from '@trpc/server';
 
 const Register = () => {
     const [name, setName] = useState('');
@@ -21,35 +22,31 @@ const Register = () => {
         return true;
     };
     const router = useRouter();
-    const handleSubmit = async () => {
-        const options: AxiosRequestConfig = {
+    async function handleLogin() {
+        const data = await fetch('http://localhost:3000/api/register/', {
             method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json;charset=UTF-8',
-            },
-
-            url: '/api/register',
-            data: {
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
                 name,
-                email: email,
-                password,
                 phone,
+                password,
+                email,
                 address,
-            },
-        };
-        const response: AxiosResponse = await axios(options);
-
-        if (response.status === 200) {
-            setAuthMessage(response.data.message);
-            return false;
-        } else if (response.status === 201) {
-            router.push('/login');
-            console.log('Success');
-        } else {
-            console.log('failed');
-        }
-    };
+            }),
+        })
+            .then(async () => {
+                signIn('credentials', {
+                    email,
+                    password,
+                    callbackUrl: 'http://localhost:3000/seller',
+                });
+                console.log('logged in');
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        router.push('/');
+    }
 
     return (
         <div className="py-1 pt-2 pl-8 mt-1 ml-4">
@@ -59,7 +56,7 @@ const Register = () => {
                 <form
                     onSubmit={(e) => {
                         e.preventDefault();
-                        handleSubmit();
+                        handleLogin();
                     }}
                 >
                     <div className="hidden sm:block">

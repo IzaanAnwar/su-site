@@ -29,7 +29,6 @@ export default async function handler(
 
     try {
         const zod = UserZ.parse(req.body);
-        console.log(zod, 'zosssss');
 
         const userExists = await prisma.seller.findFirst({
             where: {
