@@ -42,7 +42,7 @@ export const authOptions: NextAuthOptions = {
                 email: { label: 'email', type: 'text' },
                 phone: { label: 'phone', type: 'text' },
                 password: { label: 'password', type: 'text' },
-                // address: { label: 'address', type: 'text' },
+                address: { label: 'address', type: 'text' },
             },
             async authorize(credentials) {
                 if (!credentials) {

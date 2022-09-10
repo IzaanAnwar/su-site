@@ -6,36 +6,40 @@ import { trpc } from '../utils/trpc';
 const Home: NextPage = () => {
     const { data: session } = useSession();
     const hello = trpc.useQuery(['example.hello', { text: 'from tRPC' }]);
-    
+
     const user = trpc.useQuery([
         'user.getUser',
         { email: session?.user?.email },
     ]);
 
-    async function handleLogin () {
-        
-        const data = await fetch(
-            'http://localhost:3000/api/register/',
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name:'Izaan',phone: '123456789', password: '123456789', email: 'bhoolachodi@gmail.com'
-                }),
-            }
-        ).then(async ()=> {
-            signIn('credentials', {
-                name:'Izaan',phone: '123456789', password: '123456789', email: 'bhoolachodi@gmail.com', redirect:false, callbackUrl:'http://localhost:3000/'
-            })            
-         })
-        .catch(error => {
-            console.log(error)
-           
+    async function handleLogin() {
+        const data = await fetch('http://localhost:3000/api/register/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name: 'Izaan',
+                phone: '123456789',
+                password: '123456789',
+                email: 'bhoolachodi@gmail.com',
+                address: 'someaddress',
+            }),
         })
-        
-        
+            .then(async () => {
+                signIn('credentials', {
+                    name: 'Izaan',
+                    phone: '123456789',
+                    password: '123456789',
+                    email: 'bhoolachodi@gmail.com',
+                    address: 'someaddress',
+                    redirect: false,
+                    callbackUrl: 'http://localhost:3000/',
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
-    
+
     return (
         <>
             <Head>
@@ -55,7 +59,9 @@ const Home: NextPage = () => {
                             {hello.data ? (
                                 <div>
                                     <h5 className="block">
-                                        {user.data?.email ? user.data?.email : session.user?.email}
+                                        {user.data?.email
+                                            ? user.data?.email
+                                            : session.user?.email}
                                     </h5>
 
                                     <h5 className="block">
@@ -93,7 +99,7 @@ const Home: NextPage = () => {
                             <button
                                 className="px-12 py-2 text-gray-200 bg-blue-500 hover:text-blue-500 hover:bg-gray-200 hover:border-2 hover:border-blue-500 rounded-3xl duration-200"
                                 onClick={async () => {
-                                   await handleLogin()
+                                    await handleLogin();
                                 }}
                             >
                                 Register

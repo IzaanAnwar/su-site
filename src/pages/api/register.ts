@@ -22,6 +22,7 @@ export default async function handler(
         name: z.string(),
         email: z.string().email(),
         phone: z.string(),
+        address: z.string(),
         password: z.string().min(8),
     });
     console.log(req.body);
@@ -55,6 +56,7 @@ export default async function handler(
                             name: zod.name,
                             password: hashedPassword,
                             phone: zod.phone,
+                            address: zod.address,
                         },
                     });
 

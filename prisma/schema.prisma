@@ -73,6 +73,7 @@ model Seller {
     image         String?
     products      Product[]
     password      String
+    address       String
 }
 
 model Product {
