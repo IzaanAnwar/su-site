@@ -163,8 +163,7 @@ const Experimantal = ({ session }: { session: Session }) => {
             email: session.user.email,
         },
     ]);
-    const product = data.data?.products;
-    console.log(product);
+
     return <div>{data.data?.name}</div>;
 };
 
