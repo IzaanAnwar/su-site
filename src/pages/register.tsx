@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import { router } from '@trpc/server';
 
 const Register = () => {
     const [name, setName] = useState('');
@@ -36,16 +35,16 @@ const Register = () => {
         })
             .then(async () => {
                 signIn('credentials', {
-                    email,
-                    password,
-                    callbackUrl: 'http://localhost:3000/seller',
+                    email: email,
+                    password: password,
+                    redirect: false,
+                    callbackUrl: 'http://localhost:3000/',
                 });
-                console.log('logged in');
             })
             .catch((error) => {
                 console.log(error);
             });
-        router.push('/');
+        router.push('sellers');
     }
 
     return (

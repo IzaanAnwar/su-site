@@ -1,4 +1,4 @@
-import NextAuth, { type NextAuthOptions } from 'next-auth';
+import NextAuth, { User, type NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
@@ -10,24 +10,19 @@ import { compare } from 'bcrypt';
 
 export const authOptions: NextAuthOptions = {
     // Include user.id on session
+
     callbacks: {
-        async jwt({ token, user, account }) {
-            if (user?.token) {
-                token.accessToken = user.token;
-            }
-            if (account?.access_token) {
-                token.accessToken = account.access_token;
-            }
-            return token;
-        },
-        async session({ session, token }) {
+        async session({ session, user }: { session: any; user: User }) {
             if (session.user) {
-                session.user.id = token.id as string;
-                session.accessToken = token.accessToken;
+                session.user.id = user.id;
+            }
+            if (session.user?.role) {
+                session.user.role = user.role;
             }
             return session;
         },
     },
+
     // Configure one or more authentication providers
     adapter: PrismaAdapter(prisma),
     providers: [
@@ -36,37 +31,9 @@ export const authOptions: NextAuthOptions = {
             clientSecret: env.GOOGLE_CLIENT_SECRET,
         }),
         // ...add more providers here
-        CredentialsProvider({
-            credentials: {
-                email: { label: 'email', type: 'text' },
-                password: { label: 'password', type: 'text' },
-            },
-            async authorize(credentials) {
-                if (!credentials) {
-                    throw new Error('Missing Properties');
-                }
-                const user = await prisma.seller.findFirst({
-                    where: { email: credentials.email },
-                });
-                if (!user) {
-                    throw new Error('Email is not registered!');
-                }
-                const result = compare(credentials.password, user.password);
-                if (!result) throw new Error('Wrong Credentials!');
-                return user;
-            },
-        }),
     ],
 
     secret: '1@#$3kjgefkjsdf@#$khsflk$%',
-    session: {
-        strategy: 'jwt',
-        maxAge: 3600,
-    },
-    jwt: {
-        secret: env.JWT_SECRET,
-        maxAge: 3600,
-    },
 };
 
 export default NextAuth(authOptions);
