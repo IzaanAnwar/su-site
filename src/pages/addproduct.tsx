@@ -7,7 +7,7 @@ const addproduct = () => {
             <div className="flex flex-row p-[58px] m-[110px]">
                 <div className="flex w-[290px] h-[390px]  border-red-600 border font-sans">
                     <Image
-                        src="/huu.png"
+                        src=""
                         alt=""
                         className="absolute inset-0 w-full h-full object-cover"
                         loading="lazy"

@@ -38,10 +38,10 @@ export const authOptions: NextAuthOptions = {
     ],
 
     secret: env.NEXTAUTH_SECRET,
-    pages: {
-        signIn: '../../register',
-        newUser: '../../register',
-    },
+    // pages: {
+    //     signIn: '../../register',
+    //     newUser: '../../register',
+    // },
 };
 
 export default NextAuth(authOptions);
