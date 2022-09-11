@@ -6,7 +6,7 @@ export const sellerData = createRouter().query('getData', {
         email: z.string(),
     }),
     async resolve({ ctx, input }) {
-        const data = ctx.prisma.seller.findFirst({
+        const data = ctx.prisma.user.findFirst({
             where: {
                 email: input.email,
             },

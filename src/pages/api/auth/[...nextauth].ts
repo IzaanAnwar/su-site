@@ -1,6 +1,6 @@
 import NextAuth, { User, type NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
-import CredentialsProvider from 'next-auth/providers/credentials';
+import FaceBookProvider from 'next-auth/providers/facebook';
 
 // Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
@@ -30,10 +30,19 @@ export const authOptions: NextAuthOptions = {
             clientId: env.GOOGLE_CLIENT_ID,
             clientSecret: env.GOOGLE_CLIENT_SECRET,
         }),
+        // FaceBookProvider({
+        //     clientId:,
+        //     clientSecret:,
+        // })
+
         // ...add more providers here
     ],
 
-    secret: '1@#$3kjgefkjsdf@#$khsflk$%',
+    secret: env.NEXTAUTH_SECRET,
+    pages: {
+        signIn: '../../register',
+        newUser: '../../register',
+    },
 };
 
 export default NextAuth(authOptions);
