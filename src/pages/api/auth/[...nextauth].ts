@@ -38,11 +38,15 @@ export const authOptions: NextAuthOptions = {
         // ...add more providers here
     ],
 
+<<<<<<< HEAD
     secret: env.NEXTAUTH_SECRET,
     pages: {
         signIn: '../../register',
         newUser: '../../register',
     },
+=======
+    secret: '1@#$3kjgefkjsdf@#$khsflk$%',
+>>>>>>> a5fd57a60c68aa5391cb6660b9e7fc6edff44252
 };
 
 export default NextAuth(authOptions);

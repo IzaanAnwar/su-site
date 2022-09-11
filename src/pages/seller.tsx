@@ -1,31 +1,24 @@
-import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import { Session } from 'next-auth';
-import { getSession, signOut, useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { trpc } from '../utils/trpc';
-
-const seller: NextPage = () => {
+const seller = () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [nav, setNav] = useState(false);
     const handleNav = () => {
         setNav(!nav);
     };
     const { data: session } = useSession();
-    console.log(session?.user, 'in');
 
     if (session?.user) {
         return (
             <div>
                 <div className="fixed w-full h-20 bg-gray-100 shadow-lg z-[100] ">
                     <div className="flex items-center justify-between w-full h-full px-2 2xl:px-16">
-                        <Image
-                            src="/logo-bussiness.png"
-                            alt="/"
-                            width="125"
-                            height="50"
-                        />
+                        <Image src="/huu.png" alt="/" width="125" height="50" />
                         <div>
                             <ul className="hidden p-2 md:flex">
                                 <Link href="/">
@@ -33,9 +26,9 @@ const seller: NextPage = () => {
                                         how it works
                                     </li>
                                 </Link>
-                                <Link href="/">
-                                    <li className="ml-10 text-sm uppercase hover:border-b">
-                                        why us
+                                <Link href="/addproduct">
+                                    <li className="ml-10 text-sm cursor-pointer uppercase hover:border-b">
+                                        Add Product
                                     </li>
                                 </Link>
                                 <Link href="/">
@@ -85,9 +78,9 @@ const seller: NextPage = () => {
                                             Inventory
                                         </li>
                                     </Link>
-                                    <Link href="/">
+                                    <Link href="/addproduct">
                                         <li className="py-4 text-sm hover:text-[#00ffcc] hover:underline hover:animate-pulse ">
-                                            Why Us
+                                            Add Product
                                         </li>
                                     </Link>
                                     <Link href="/">
@@ -105,9 +98,7 @@ const seller: NextPage = () => {
                         </div>
                     </div>
 
-                    <div>
-                        <Experimantal session={session} />
-                    </div>
+                    <div></div>
                 </div>
 
                 <div className="flex  justify-center sm:justify-start ml-4 mr-[20px]">
@@ -121,9 +112,7 @@ const seller: NextPage = () => {
                             <p className="m-2 p-2 sm:w-[250px]   cursor-pointer   hover:text-cyan-600">
                                 Business Name
                             </p>
-                            <p className="m-2 p-2 sm:w-[250px]   cursor-pointer   hover:text-cyan-600">
-                                Owner Name
-                            </p>
+
                             <p className="m-2 p-2 sm:w-[250px]   cursor-pointer   hover:text-cyan-600">
                                 Email
                             </p>
@@ -131,9 +120,9 @@ const seller: NextPage = () => {
                                 Contact Info
                             </p>
                             <p className="m-2 p-2 sm:w-[250px]   cursor-pointer   hover:text-cyan-600">
-                                pokharthjhuyuyturyuryuyhtffff ffffffffffffffffff
-                                fffffffffff ffffff ffffffff fffff fffffoli road
-                                near neem chowk mani tola doran da ranchi1
+                                pokharthjhuyuyturyuryuyhtffff fffffffffffffffff
+                                fffffffffff ffffff fffffffff fffffoli road near
+                                neem chowk mani tola doran da ranchi1
                             </p>
                             <p className="m-2 p-2 sm:w-[250px]   cursor-pointer   hover:text-cyan-600">
                                 Total Stock
