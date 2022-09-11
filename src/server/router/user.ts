@@ -12,6 +12,9 @@ export const user = createRouter().query('getUser', {
             where: {
                 email: input?.email,
             },
+            include: {
+                productsBought: {},
+            },
         });
         return data;
     },

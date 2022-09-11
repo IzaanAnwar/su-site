@@ -1,8 +1,10 @@
+import { Session } from 'next-auth';
 import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
+import { trpc } from '../utils/trpc';
 const seller = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [nav, setNav] = useState(false);
@@ -138,6 +140,20 @@ const seller = () => {
             </div>
         );
     }
+};
+
+const Experimantal = ({ session }: { session: Session }) => {
+    if (!session.user?.email) {
+        return <div>EnterData</div>;
+    }
+    const data = trpc.useQuery([
+        'seller.getData',
+        {
+            email: session.user.email,
+        },
+    ]);
+
+    return <div>{data.data?.name}</div>;
 };
 
 export default seller;
