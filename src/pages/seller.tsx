@@ -179,7 +179,7 @@ const Experimantal = ({
         <div>
             {data.data?.name}
             <div>
-                <input type="file" />
+                <input type="file" accept="images" />
                 <button
                     onClick={async (e) => {
                         uploadProduct().then((data) =>
