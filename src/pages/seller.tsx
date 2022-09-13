@@ -12,6 +12,7 @@ const seller = () => {
         setNav(!nav);
     };
     const { data: session } = useSession();
+    const newDta = trpc.useMutation('seller.addProduct');
 
     if (session?.user) {
         return (
@@ -127,6 +128,7 @@ const seller = () => {
                             <p className="m-2 p-2 sm:w-[250px]   cursor-pointer   hover:text-cyan-600">
                                 Total Stock
                             </p>
+                            <Experimantal session={session} newDta={newDta} />
                         </div>
                     </div>
                 </div>
@@ -142,7 +144,27 @@ const seller = () => {
     }
 };
 
-const Experimantal = ({ session }: { session: Session }) => {
+const Experimantal = ({
+    session,
+    newDta,
+}: {
+    session: Session;
+    newDta: any;
+}) => {
+    async function uploadProduct() {
+        if (newDta && session.user?.email) {
+            await newDta.mutate({
+                name: 'falana',
+                size: 'input.size',
+                image: 'input.image',
+                stock: 'input.stock',
+                price: 'someprice',
+                description: 'input.description',
+                email: session.user.email,
+            });
+            console.log('sucess');
+        }
+    }
     if (!session.user?.email) {
         return <div>EnterData</div>;
     }
@@ -153,7 +175,23 @@ const Experimantal = ({ session }: { session: Session }) => {
         },
     ]);
 
-    return <div>{data.data?.name}</div>;
+    return (
+        <div>
+            {data.data?.name}
+            <div>
+                <input type="file" />
+                <button
+                    onClick={async (e) => {
+                        uploadProduct().then((data) =>
+                            console.log(';succesfull'),
+                        );
+                    }}
+                >
+                    Add
+                </button>
+            </div>
+        </div>
+    );
 };
 
 export default seller;
