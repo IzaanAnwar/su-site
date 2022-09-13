@@ -1,19 +1,66 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 
 const addproduct = () => {
+    const [selectedImages, setSelectedImages] = useState([]);
+
+    const onSelectFile = (event) => {
+        const selectedFiles = event.target.files;
+        const selectedFilesArray = Array.from(selectedFiles);
+
+        const imagesArray = selectedFilesArray.map((file) => {
+            return URL.createObjectURL(file);
+        });
+
+        setSelectedImages((previousImages) =>
+            previousImages.concat(imagesArray),
+        );
+
+        // FOR BUG IN CHROME
+        event.target.value = '';
+    };
+
     return (
         <div className="grid  place-items-center h-screen">
-            <div className="flex flex-row p-[58px] m-[110px]">
+            <div className="flex flex-row p-[5px] m-[110px]">
                 <div className="flex w-[290px] h-[390px]  border-red-600 border font-sans">
-                    <Image
-                        src=""
-                        alt=""
-                        className="absolute inset-0 w-full h-full object-cover"
-                        loading="lazy"
-                        width={300}
-                        height={50}
-                    />
+                    <div className="images">
+                        {selectedImages &&
+                            selectedImages.map((image, index) => {
+                                return (
+                                    <div key={image} className="image">
+                                        <Image
+                                            src={image}
+                                            width="400"
+                                            className=" transition-all ease-in-out duration-1000 transform translate-x-0 slide"
+                                            height="300"
+                                            alt="upload"
+                                        />
+                                    </div>
+                                );
+                            })}
+                    </div>
+
+                    <section>
+                        <br />
+
+                        {selectedImages.length > 0 &&
+                            (selectedImages.length > 10 ? (
+                                <p className="error">
+                                    You can't upload more than 10 images! <br />
+                                </p>
+                            ) : (
+                                <button
+                                    className="upload-btn"
+                                    onClick={() => {
+                                        console.log(selectedImages);
+                                    }}
+                                >
+                                    {/* {selectedImages.length}
+                                    {selectedImages.length === 1 ? '' : 'S'} */}
+                                </button>
+                            ))}
+                    </section>
                 </div>
 
                 <div className=" border border-green-700 ml-[15px]">
@@ -67,7 +114,8 @@ const addproduct = () => {
                             <div className="block">
                                 <h1>size</h1>
                             </div>
-                            <div className="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200">
+
+                            <div className="flex items-baseline mt-4 mb-6 pb-6 m-[5px] border-b border-green-800">
                                 <div className="space-x-2 flex text-sm">
                                     <label>
                                         <input
@@ -128,6 +176,22 @@ const addproduct = () => {
                                     </label>
                                 </div>
                             </div>
+
+                            <div className="m-[5px] border border-b-red-700">
+                                <label className="text-sm">
+                                    {/* + Add Images */}
+
+                                    <span>up to 10 images</span>
+                                    <input
+                                        type="file"
+                                        name="images"
+                                        onChange={onSelectFile}
+                                        multiple
+                                        accept="image/png ,image/jpg, image/jpeg, image/webp"
+                                    />
+                                </label>
+                            </div>
+                            {/* <input type="file" multiple /> */}
 
                             <div>
                                 <label className="relative block ">
