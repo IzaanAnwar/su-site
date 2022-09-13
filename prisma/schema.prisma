@@ -71,6 +71,7 @@ model Product {
     image         String?
     stock         String
     size          String
+    price         String
     User          User?           @relation(fields: [userId], references: [id])
     userId        String?
     BoughtProduct BoughtProduct[]

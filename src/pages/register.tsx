@@ -17,6 +17,7 @@ const Register = () => {
                 <button
                     onClick={(e) => {
                         signIn('google', {
+                            redirect: false,
                             callbackUrl: 'http://localhost:3000/seller',
                         });
                     }}
