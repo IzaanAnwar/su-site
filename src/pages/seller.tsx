@@ -117,9 +117,12 @@ const seller = () => {
                             <p className="m-2 p-2 sm:w-[250px]   cursor-pointer   hover:text-cyan-600">
                                 Email
                             </p>
-                            <p className="m-2 p-2 sm:w-[250px]   cursor-pointer   hover:text-cyan-600">
-                                Contact Info
-                            </p>
+                            <a
+                                href="//api.whatsapp.com/send?phone=917079252842&text=bhula_chodi"
+                                className="m-2 p-2 sm:w-[250px]   cursor-pointer   hover:text-cyan-600"
+                            >
+                                WhatsApp
+                            </a>
                             <p className="m-2 p-2 sm:w-[250px]   cursor-pointer   hover:text-cyan-600">
                                 pokharthjhuyuyturyuryuyhtffff fffffffffffffffff
                                 fffffffffff ffffff fffffffff fffffoli road near

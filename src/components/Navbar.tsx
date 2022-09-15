@@ -30,7 +30,7 @@ const Navbar = () => {
                         : 'fixed w-full bg-white h-20 z-[100] '
                 }
             >
-                <div className="flex items-center justify-between w-full h-full px-2 2xl:px-16">
+                <div className="flex items-center bg-[#FFEEAF]/40 justify-between w-full h-full px-2 2xl:px-16 shadow-lg">
                     <Image
                         src="/shu-site.png"
                         alt="/"
@@ -38,22 +38,18 @@ const Navbar = () => {
                         height="50"
                     />
                     <div>
-                        <ul className="hidden p-2 md:flex">
+                        <ul className="hidden p-2 md:flex font-extrabold">
                             <Link href="/">
-                                <li className="ml-10 text-sm uppercase cursor-pointer hover:border-b">
+                                <li className="ml-10 text-sm uppercase cursor-pointer  hover:border-b">
                                     home
                                 </li>
                             </Link>
                             <Link href="/#about">
                                 <li className="ml-10 text-sm uppercase cursor-pointer hover:border-b">
-                                    how it works
+                                    WHY SHOP WITH US
                                 </li>
                             </Link>
-                            <Link href="/">
-                                <li className="ml-10 text-sm uppercase cursor-pointer hover:border-b">
-                                    why us
-                                </li>
-                            </Link>
+
                             <Link href="/">
                                 <li className="ml-10 text-sm uppercase cursor-pointer hover:border-b">
                                     buyer
@@ -85,7 +81,7 @@ const Navbar = () => {
                                 : 'fixed left-[-100%] top-0 h-screen  x-5 ease-in duration-500'
                         }
                     >
-                        <div className="flex flex-col ">
+                        <div className="flex flex-col  ">
                             <ul className="ml-2 text-white uppercase ">
                                 <Link href="/">
                                     <li className="py-4 cursor-pointer text-sm hover:text-[#12f5c7] hover:underline hover:animate-pulse">
@@ -94,14 +90,10 @@ const Navbar = () => {
                                 </Link>
                                 <Link href="/#about">
                                     <li className="py-4 text-sm cursor-pointer hover:text-[#2fffd5] hover:underline hover:animate-pulse">
-                                        How it works
+                                        WHY SHOP WITH US
                                     </li>
                                 </Link>
-                                <Link href="/">
-                                    <li className="py-4 text-sm hover:text-[#00ffcc] cursor-pointer hover:underline hover:animate-pulse ">
-                                        Why Us
-                                    </li>
-                                </Link>
+
                                 <Link href="/">
                                     <li className="py-4 text-sm hover:text-[#0ef7c8] hover:underline cursor-pointer hover:animate-pulse">
                                         Buyer
