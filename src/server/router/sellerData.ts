@@ -1,6 +1,8 @@
 import { createRouter } from './context';
 import { z } from 'zod';
-import { resolve } from 'path';
+
+import { v2 as cloudinary } from 'cloudinary';
+import { env } from '../../env/server.mjs';
 
 export const sellerData = createRouter()
     .query('getData', {
@@ -33,17 +35,28 @@ export const sellerData = createRouter()
             const seller = await ctx.prisma.user.findFirst({
                 where: { email: input.email },
             });
+            console.log(env.API_KEY, 'process');
+
+            const result = await cloudinary.uploader.upload(input.image, {
+                folder: 'products',
+            });
+
             if (seller) {
                 const data = await ctx.prisma.product.create({
                     data: {
                         name: input.name,
                         size: input.size,
-                        image: input.image,
                         stock: input.stock,
                         price: input.price,
                         description: input.description,
-
                         userId: seller.id,
+                    },
+                });
+                await ctx.prisma.productImage.create({
+                    data: {
+                        productId: data.id,
+                        public_id: result.public_id,
+                        url: result.secure_url,
                     },
                 });
                 return data;
@@ -86,16 +99,16 @@ export const sellerData = createRouter()
                     },
                 });
                 return updatedData;
-            } else if (input.data === 'image') {
-                const updatedData = await ctx.prisma.product.update({
-                    where: {
-                        id: input.productId,
-                    },
-                    data: {
-                        image: input.data,
-                    },
-                });
-                return updatedData;
+                // } else if (input.data === 'image') {
+                //     const updatedData = await ctx.prisma.product.update({
+                //         where: {
+                //             id: input.productId,
+                //         },
+                //         data: {
+                //             image: input.data,
+                //         },
+                //     });
+                //     return updatedData;
             } else if (input.data === 'name') {
                 const updatedData = await ctx.prisma.product.update({
                     where: {

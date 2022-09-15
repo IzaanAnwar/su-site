@@ -2,19 +2,23 @@ import { Session } from 'next-auth';
 import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
+import { env } from '../env/client.mjs';
 import { trpc } from '../utils/trpc';
 const seller = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [nav, setNav] = useState(false);
+    const [hasApplied, setHasApplied] = useState(false);
     const handleNav = () => {
         setNav(!nav);
     };
+    const router = useRouter();
+    const user = trpc.useMutation('user.assignRole');
     const { data: session } = useSession();
-    const newDta = trpc.useMutation('seller.addProduct');
 
-    if (session?.user) {
+    if (session?.user && session.user?.role === 'seller') {
         return (
             <div>
                 <div className="fixed w-full h-20 bg-gray-100 shadow-lg z-[100] ">
@@ -40,7 +44,9 @@ const seller = () => {
 
                                 <button
                                     onClick={() => {
-                                        signOut();
+                                        signOut({
+                                            callbackUrl: `${env.NEXT_PUBLIC_URL}/register`,
+                                        });
                                     }}
                                     className="ml-10 text-sm uppercase hover:border-b"
                                 >
@@ -118,20 +124,45 @@ const seller = () => {
                                 Email
                             </p>
                             <p className="m-2 p-2 sm:w-[250px]   cursor-pointer   hover:text-cyan-600">
-                                Contact Info
+                                <a href="whatsapp://send?abid=7079252842&text=Hello%2C%20World!">
+                                    Send Message
+                                </a>
                             </p>
                             <p className="m-2 p-2 sm:w-[250px]   cursor-pointer   hover:text-cyan-600">
-                                pokharthjhuyuyturyuryuyhtffff fffffffffffffffff
-                                fffffffffff ffffff fffffffff fffffoli road near
-                                neem chowk mani tola doran da ranchi1
+                                Aliqua nulla nostrud do veniam dolore veniam
+                                reprehenderit nisi ullamco aliquip quis aliquip.
+                                Ullamco Lorem est laborum exercitation ut aliqua
+                                aliquip aute cupidatat ut officia. Cupidatat
+                                tempor qui nisi exercitation deserunt nulla
+                                velit non veniam sint nulla anim ullamco et.
                             </p>
                             <p className="m-2 p-2 sm:w-[250px]   cursor-pointer   hover:text-cyan-600">
                                 Total Stock
                             </p>
-                            <Experimantal session={session} newDta={newDta} />
                         </div>
                     </div>
                 </div>
+            </div>
+        );
+    } else if (session?.user) {
+        const makeSeller = (session: Session) => {
+            user.mutate({ email: session?.user?.email as string });
+            setHasApplied(true);
+            router.push('/seller');
+            router.reload();
+        };
+
+        return (
+            <div>
+                {hasApplied ? (
+                    <div>Loading...</div>
+                ) : (
+                    <div>
+                        <button onClick={(e) => makeSeller(session)}>
+                            Become a Seller
+                        </button>
+                    </div>
+                )}
             </div>
         );
     } else {
@@ -142,56 +173,6 @@ const seller = () => {
             </div>
         );
     }
-};
-
-const Experimantal = ({
-    session,
-    newDta,
-}: {
-    session: Session;
-    newDta: any;
-}) => {
-    async function uploadProduct() {
-        if (newDta && session.user?.email) {
-            await newDta.mutate({
-                name: 'falana',
-                size: 'input.size',
-                image: 'input.image',
-                stock: 'input.stock',
-                price: 'someprice',
-                description: 'input.description',
-                email: session.user.email,
-            });
-            console.log('sucess');
-        }
-    }
-    if (!session.user?.email) {
-        return <div>EnterData</div>;
-    }
-    const data = trpc.useQuery([
-        'seller.getData',
-        {
-            email: session.user.email,
-        },
-    ]);
-
-    return (
-        <div>
-            {data.data?.name}
-            <div>
-                <input type="file" accept="images" />
-                <button
-                    onClick={async (e) => {
-                        uploadProduct().then((data) =>
-                            console.log(';succesfull'),
-                        );
-                    }}
-                >
-                    Add
-                </button>
-            </div>
-        </div>
-    );
 };
 
 export default seller;
