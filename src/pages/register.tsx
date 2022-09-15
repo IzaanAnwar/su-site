@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import React from 'react';
 import { signIn } from 'next-auth/react';
 
 const Register = () => {
-    const [authMessage, setAuthMessage] = useState(null);
-
     return (
         <div className=" text-center ">
             <div>Become a Seller</div>
@@ -12,6 +11,7 @@ const Register = () => {
                     onClick={(e) => {
                         signIn('google', {
                             redirect: false,
+
                             callbackUrl: 'http://localhost:3000/seller',
                         });
                     }}

@@ -14,11 +14,12 @@ const Form = () => {
 
                     <div className="flex flex-col pb-2 uppercase">
                         <button
-                            className="p-2 ml-[30px] mb-4 w-[250px] bg-white/70 font-extrabold rounded-lg"
+                            className="p-2 ml-[30px] mb-4 w-[250px] bg-gray-500 rounded-lg hover:bg-gray-200 focus:bg-gray-300 duration-200"
                             onClick={() => {
                                 signIn('google', {
                                     redirect: false,
-                                    callbackUrl: 'http://localhost:3000/seller',
+                                    callbackUrl:
+                                        'http://localhost:3000/dashboard',
                                 });
                             }}
                             type="submit"
@@ -27,7 +28,7 @@ const Form = () => {
                         </button>
                     </div>
                     <button
-                        className="p-2 ml-[30px] mb-4 w-[250px] bg-white/70 rounded-lg font-bold "
+                        className="p-2 ml-[30px] mb-4 w-[250px] bg-gray-500 rounded-lg hover:bg-gray-200 focus:bg-gray-300"
                         type="submit"
                     >
                         Continue with Facebook
