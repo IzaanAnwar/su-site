@@ -4,21 +4,23 @@ import React, { useState } from 'react';
 const addproduct = () => {
     const [selectedImages, setSelectedImages] = useState([]);
 
-    const onSelectFile = (event: { target: { files: any; value: string } }) => {
-        const selectedFiles = event.target.files;
-        const selectedFilesArray = Array.from(selectedFiles);
+    // const onSelectFile = (event: { target: { files: any; value: string } }) => {
+    //     const selectedFiles = event.target.files;
+    //     const selectedFilesArray = Array.from(selectedFiles);
 
-        const imagesArray = selectedFilesArray.map((file) => {
-            return URL.createObjectURL(file);
-        });
+    //     const imagesArray: ConcatArray<never> = selectedFilesArray.map(
+    //         (file) => {
+    //             return URL.createObjectURL(file);
+    //         },
+    //     );
 
-        setSelectedImages((previousImages) =>
-            previousImages.concat(imagesArray),
-        );
+    //     setSelectedImages((previousImages) =>
+    //         previousImages.concat(imagesArray),
+    //     );
 
-        // FOR BUG IN CHROME
-        event.target.value = '';
-    };
+    //     // FOR BUG IN CHROME
+    //     event.target.value = '';
+    // };
 
     return (
         <div>
@@ -193,7 +195,7 @@ const addproduct = () => {
                                             className="p-2 "
                                             type="file"
                                             name="images"
-                                            onChange={onSelectFile}
+                                            // onChange={onSelectFile}
                                             multiple
                                             accept="image/png ,image/jpg, image/jpeg, image/webp"
                                         />

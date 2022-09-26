@@ -16,7 +16,7 @@ const seller = () => {
     };
     const router = useRouter();
     const user = trpc.useMutation('user.assignRole');
-    const { data: session } = useSession();
+    const { data: session }: any = useSession();
 
     if (session?.user && session.user?.role === 'seller') {
         return (

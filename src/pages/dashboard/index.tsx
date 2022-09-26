@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import React from 'react';
 import { trpc } from '../../utils/trpc';
 
@@ -36,7 +36,7 @@ const dashboard: NextPage = () => {
             <h1 className="text-3xl font-serif text-center mt-4">
                 Explore Now! Buy Shoes At Affordable Prices!
             </h1>
-            <ProductCart />
+            <ProductCart router={router} productData={allProducts} />
         </>
     );
 };
@@ -45,6 +45,7 @@ export default dashboard;
 
 const mockData = [
     {
+        id: 'alshdaisfi',
         name: 'product1',
         stock: '1',
         size: ['6', '7', '8', '9'],
@@ -56,6 +57,7 @@ const mockData = [
         rating: '4',
     },
     {
+        id: 'alshdaisfi',
         name: 'product1',
         stock: '1',
         size: ['6', '7', '8'],
@@ -67,6 +69,7 @@ const mockData = [
         rating: '4',
     },
     {
+        id: 'alshdaisfi',
         name: 'product1',
         stock: '1',
         size: ['6', '7', '8'],
@@ -78,6 +81,7 @@ const mockData = [
         rating: '4',
     },
     {
+        id: 'alshdaisfi',
         name: 'product1',
         stock: '1',
         size: ['6', '7', '8'],
@@ -90,12 +94,21 @@ const mockData = [
     },
 ];
 
-const ProductCart = () => {
+const ProductCart = ({
+    router,
+    productData,
+}: {
+    router: NextRouter;
+    productData: any;
+}) => {
     return (
         <div className="sm:flex sm:p-8 ">
             {mockData?.map((data, index) => {
                 return (
                     <div
+                        onClick={(e) => {
+                            router.push(`/dashboard/${data.id}`);
+                        }}
                         className=" sm:max-w-fit p-4 sm:px-8 sm:py-4 bg-gray-200 m-4 rounded hover:shadow duration-200"
                         key={index}
                     >

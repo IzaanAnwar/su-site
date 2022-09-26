@@ -6,7 +6,6 @@ import { trpc } from '../utils/trpc';
 
 const Home: NextPage = () => {
     const { data: session } = useSession();
-    const hello = trpc.useQuery(['example.hello', { text: 'from tRPC' }]);
 
     const user = trpc.useQuery([
         'user.getUser',
